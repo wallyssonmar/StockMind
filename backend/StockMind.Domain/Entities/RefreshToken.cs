@@ -8,6 +8,7 @@
         public string Token {  get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ExpireAt { get; set; }
+        public DateTime? RevokedAt { get; set; }
         public bool IsRevoked { get; set; }
     }
 }

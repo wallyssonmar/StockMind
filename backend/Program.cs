@@ -1,17 +1,34 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using StockMind.StockMind.Infrastructure.Data.Context;
+
 using System.Text;
+using StockMind.StockMind.Infrastructure.Services;
+using StockMind.StockMind.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi(); 
+//Injeção de Dependência.
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "StockMind API",
+        Version = "v1",
+        Description = "API para gerenciamento inteligente de estoque."
+    });
+
+});
+
+
 
 builder.Services.AddDbContext<StockMindContext>(options =>
 {
@@ -38,11 +55,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+
+    app.UseSwagger();
+    app.UseSwaggerUI( options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "StockMind API v1");
+    });
 }
+
 
 app.UseHttpsRedirection();
 
