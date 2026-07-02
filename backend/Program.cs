@@ -8,14 +8,18 @@ using StockMind.StockMind.Infrastructure.Data.Context;
 using System.Text;
 using StockMind.StockMind.Infrastructure.Services;
 using StockMind.StockMind.Domain.Interfaces;
+using StockMind.StockMind.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-//Injeção de Dependência.
+//Injeção de Dependência Services.
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+//Injeção de Dependência Repositories.
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddSwaggerGen(options =>
 {

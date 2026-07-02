@@ -28,7 +28,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="StockMind.API\Controllers\" />
     <Folder Include="StockMind.Infrastructure\Data\Migrations\" />
-    <Folder Include="StockMind.Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>

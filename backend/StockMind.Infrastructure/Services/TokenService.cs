@@ -9,9 +9,11 @@ using System.Text;
 
 namespace StockMind.StockMind.Infrastructure.Services
 {
-    public class TokenService(IConfiguration configuration): ITokenService
+    
+    public class TokenService(IConfiguration configuration, IRefreshTokenRepository refreshTokenRepository) : ITokenService
     {
         private readonly IConfiguration _configuration = configuration;
+        private readonly IRefreshTokenRepository _refreshTokenRepository = refreshTokenRepository;
 
         public string GenerateToken(UserTokenDto userTokenDto)
         {
@@ -54,10 +56,10 @@ namespace StockMind.StockMind.Infrastructure.Services
                 UserId = userId,
                 Token = refreshToken,
                 CreatedAt = DateTime.UtcNow,
-                ExpireAt = DateTime.UtcNow.AddDays(7),
-                IsRevoked = false,
-                
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
             };
+
+            await _refreshTokenRepository.SetRefreshTokenAsync(refreshTokenBanco);
         }
     }
 }

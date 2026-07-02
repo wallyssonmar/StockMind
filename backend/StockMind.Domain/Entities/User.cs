@@ -4,6 +4,7 @@
     {
         public Guid Id { get; set; }
         public ICollection<Product> Products { get; set; } = new List<Product>();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
         public required string Name { get; set; }
         public required string Email { get; set; }
         public required string Password { get; set; }
