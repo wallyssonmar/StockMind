@@ -1,5 +1,5 @@
-﻿using StockMind.StockMind.Domain.Entities;
-using StockMind.StockMind.Domain.Interfaces;
+﻿using StockMind.StockMind.Application.Interfaces;
+using StockMind.StockMind.Domain.Entities;
 using StockMind.StockMind.Infrastructure.Data.Context;
 
 namespace StockMind.StockMind.Infrastructure.Repositories
@@ -10,7 +10,7 @@ namespace StockMind.StockMind.Infrastructure.Repositories
 
         public async Task SetRefreshTokenAsync(RefreshToken refreshToken)
         {
-            await _stockMindContext.RefreshTokens.AddAsync(refreshToken);
+            _stockMindContext.RefreshTokens.Add(refreshToken);
             await _stockMindContext.SaveChangesAsync();
         }
     }

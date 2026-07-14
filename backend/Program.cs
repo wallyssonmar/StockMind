@@ -6,9 +6,11 @@ using Microsoft.OpenApi.Models;
 using StockMind.StockMind.Infrastructure.Data.Context;
 
 using System.Text;
-using StockMind.StockMind.Infrastructure.Services;
-using StockMind.StockMind.Domain.Interfaces;
 using StockMind.StockMind.Infrastructure.Repositories;
+using StockMind.StockMind.Application.Interfaces;
+using StockMind.StockMind.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication;
+using StockMind.StockMind.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 //Injeção de Dependência Services.
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 //Injeção de Dependência Repositories.
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<AuthRepository, AuthRepository>();
 
 builder.Services.AddSwaggerGen(options =>
 {
